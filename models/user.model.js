@@ -9,6 +9,7 @@ export const userSchema = new mongoose.Schema(
       minLength: 3,
       maxLength: 50,
     },
+
     email: {
       unique: true,
       trim: true,
@@ -18,6 +19,7 @@ export const userSchema = new mongoose.Schema(
         "Please enter a valid email address",
       ],
     },
+
     password: {
       required: true,
       minLength: 6,
