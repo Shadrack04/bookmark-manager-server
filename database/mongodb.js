@@ -12,6 +12,6 @@ export const connectToDatabase = async () => {
 
     console.log(`connected to database in ${NODE_ENV} mode`);
   } catch (error) {
-    console.error("error connection to database", error);
+    console.error("error connecting to database", error);
   }
 };

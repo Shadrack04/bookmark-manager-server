@@ -2,7 +2,7 @@ const errorMiddleware = (err, req, res, next) => {
   try {
     let error = { ...err };
 
-    error.message - err.message;
+    error.message = err.message;
 
     console.error(error);
 
@@ -11,6 +11,7 @@ const errorMiddleware = (err, req, res, next) => {
       const message = "Resource not found";
       error = new Error(message);
       error.statusCode = 404;
+      throw error;
     }
 
     // mongoose duplicate key
@@ -18,6 +19,7 @@ const errorMiddleware = (err, req, res, next) => {
       const message = "Duplicate field value entered";
       error = new Error(message);
       error.statusCode = 400;
+      throw error;
     }
 
     // mongoose validation error
@@ -25,6 +27,7 @@ const errorMiddleware = (err, req, res, next) => {
       const message = Object.values(err.errors).map((val) => val.message);
       error = new Error(message.join(", "));
       error.statusCode = 400;
+      throw error;
     }
 
     res
