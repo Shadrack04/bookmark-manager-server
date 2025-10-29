@@ -44,8 +44,8 @@ export const signUpHandler = async (req, res, next) => {
       },
     });
   } catch (error) {
-    await session.abortTransaction;
-    await session.endSession();
+    session.abortTransaction;
+    session.endSession();
     next(error);
   }
 };
@@ -87,3 +87,8 @@ export const signInHandler = async (req, res, next) => {
 };
 
 export const signOutHandler = async (req, res, next) => {};
+
+// {
+//     "email": "shadrack04@gmail.com",
+//     "password": "123456"
+// }
