@@ -1,4 +1,5 @@
 import mongoose from "mongoose";
+import { fetchMetadata } from "../services/metadata.service";
 
 const bookmarkSchema = new mongoose.Schema(
   {
