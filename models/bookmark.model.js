@@ -72,6 +72,21 @@ bookmarkSchema.index({ url: 1 });
 bookmarkSchema.index({ isArchived: 1 });
 bookmarkSchema.index({ userId: 1, title: 1 });
 
-bookmarkSchema.pre();
+bookmarkSchema.pre("save", async function (next) {
+  // Only fetch metadata if it's a new bookmark or URL changed
+  if (this.isNew || this.isModified("url")) {
+    const { description, favicon } = await fetchMetadata(this.url);
+
+    if (!this.description && description) {
+      this.description = description;
+    }
+
+    if (!this.favicon) {
+      this.favicon = favicon || this.title.charAt(0).toUpperCase();
+    }
+  }
+
+  next();
+});
 
 export const Bookmark = mongoose.model("Bookmark", bookmarkSchema);
