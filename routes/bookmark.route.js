@@ -1,11 +1,12 @@
 import { Router } from "express";
+import * as bookmarkController from "../controllers/bookmark.controller.js";
 
 const bookmarkRouter = Router();
 
 bookmarkRouter.get("/", (req, res) => res.send("get all bookmarks"));
+bookmarkRouter.post("/", bookmarkController.createBookmark);
 
 bookmarkRouter.get("/:id", (req, res) => res.send("get a single bookmark"));
-bookmarkRouter.post("/", (req, res) => res.send("create bookmark"));
 bookmarkRouter.put("/:id", (req, res) => res.send("update a bookmark"));
 bookmarkRouter.delete("/:id", (req, res) => res.send("delete a bookmark"));
 

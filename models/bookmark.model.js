@@ -1,5 +1,5 @@
 import mongoose from "mongoose";
-import { fetchMetadata } from "../services/metadata.service";
+import { fetchMetadata } from "../services/metadata.service.js";
 
 const bookmarkSchema = new mongoose.Schema(
   {
@@ -7,7 +7,7 @@ const bookmarkSchema = new mongoose.Schema(
       type: mongoose.Schema.Types.ObjectId,
       ref: "User",
       index: true,
-      required: true,
+      required: [true, "UserId is required"],
     },
     title: {
       type: String,
