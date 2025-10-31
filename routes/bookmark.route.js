@@ -3,7 +3,7 @@ import * as bookmarkController from "../controllers/bookmark.controller.js";
 
 const bookmarkRouter = Router();
 
-bookmarkRouter.get("/", (req, res) => res.send("get all bookmarks"));
+bookmarkRouter.get("/", bookmarkController.getAllBookmarks);
 bookmarkRouter.post("/", bookmarkController.createBookmark);
 
 bookmarkRouter.get("/:id", (req, res) => res.send("get a single bookmark"));
