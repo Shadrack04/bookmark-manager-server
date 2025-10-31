@@ -7,6 +7,7 @@ import { connectToDatabase } from "./database/mongodb.js";
 import errorMiddleware from "./middlewares/error.middleware.js";
 import bookmarkRouter from "./routes/bookmark.route.js";
 import authMiddleware from "./middlewares/auth.middleware.js";
+import { arcjectMiddleware } from "./middlewares/arcjet.middleware.js";
 
 const app = express();
 
@@ -14,6 +15,7 @@ app.use(logger("dev"));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
+app.use(arcjectMiddleware);
 
 app.use("/api/v1/auth", authRouter);
 app.use("/api/v1/bookmark", authMiddleware, bookmarkRouter);
