@@ -7,7 +7,7 @@ bookmarkRouter.get("/", bookmarkController.getAllBookmarks);
 bookmarkRouter.post("/", bookmarkController.createBookmark);
 bookmarkRouter.get("/:id", bookmarkController.getBookmarkById);
 
-bookmarkRouter.put("/:id", (req, res) => res.send("update a bookmark"));
+bookmarkRouter.put("/:id", bookmarkController.updateBookmarkById);
 bookmarkRouter.delete("/:id", (req, res) => res.send("delete a bookmark"));
 
 bookmarkRouter.patch("/:id/view", (req, res) =>

@@ -25,7 +25,8 @@ export const getAllBookmarks = async (req, res, next) => {
 
 export const getBookmarkById = async (req, res, next) => {
   try {
-    const bookmark = await Bookmark.findById({ _id: req.params.id });
+    // const bookmark = await Bookmark.findById({ _id: req.params.id });
+    const bookmark = await Bookmark.findOne({ _id: req.params.id });
 
     if (!bookmark) {
       const message = "Bookmark not found";
@@ -36,3 +37,19 @@ export const getBookmarkById = async (req, res, next) => {
     next(error);
   }
 };
+
+export const updateBookmarkById = async (req, res, next) => {
+  try {
+    const bookmark = await Bookmark.findByIdAndUpdate(
+      req.params.id,
+      { ...req.body },
+      { runValidators: true }
+    );
+
+    success(res, bookmark, 200);
+  } catch (error) {
+    next(error);
+  }
+};
+
+// shadrack.vercel.app id => 69049bd4e3a4a5a8dad48537
