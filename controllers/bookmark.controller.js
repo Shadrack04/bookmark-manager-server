@@ -66,4 +66,14 @@ export const updateVisitCount = async (req, res, next) => {
   }
 };
 
+export const deleteBookmarkById = async (req, res, next) => {
+  try {
+    const deleteCount = await Bookmark.deleteOne({ _id: req.params.id });
+
+    success(res, deleteCount, 200);
+  } catch (error) {
+    next(error);
+  }
+};
+
 // shadrack.vercel.app id => 69049bd4e3a4a5a8dad48537
