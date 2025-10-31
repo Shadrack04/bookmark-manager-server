@@ -6,13 +6,11 @@ const bookmarkRouter = Router();
 bookmarkRouter.get("/", bookmarkController.getAllBookmarks);
 bookmarkRouter.post("/", bookmarkController.createBookmark);
 bookmarkRouter.get("/:id", bookmarkController.getBookmarkById);
-
 bookmarkRouter.put("/:id", bookmarkController.updateBookmarkById);
+bookmarkRouter.patch("/:id/view", bookmarkController.updateVisitCount);
+
 bookmarkRouter.delete("/:id", (req, res) => res.send("delete a bookmark"));
 
-bookmarkRouter.patch("/:id/view", (req, res) =>
-  res.send("increase view count")
-);
 bookmarkRouter.post("/:id/archive", (req, res) =>
   res.send("archive a bookmark")
 );

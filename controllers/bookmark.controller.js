@@ -52,4 +52,18 @@ export const updateBookmarkById = async (req, res, next) => {
   }
 };
 
+export const updateVisitCount = async (req, res, next) => {
+  try {
+    const id = req.params.id;
+    console.log(id);
+    const bookmark = await Bookmark.findById(id);
+    bookmark.visitCount = bookmark.visitCount + 1;
+    await bookmark.save();
+
+    success(res, bookmark, 200);
+  } catch (error) {
+    next(error);
+  }
+};
+
 // shadrack.vercel.app id => 69049bd4e3a4a5a8dad48537
