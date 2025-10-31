@@ -1,5 +1,5 @@
 import { Bookmark } from "../models/bookmark.model.js";
-import { success } from "../services/response.js";
+import { fail, success } from "../services/response.js";
 
 export const createBookmark = async (req, res, next) => {
   try {
@@ -7,12 +7,6 @@ export const createBookmark = async (req, res, next) => {
       ...req.body,
       userId: req.user._id,
     });
-
-    // res.status(201).json({
-    //   success: true,
-    //   message: "Bookmark created successfully",
-    //   data: bookmark,
-    // });
 
     success(res, bookmark, 201);
   } catch (error) {
@@ -24,6 +18,20 @@ export const getAllBookmarks = async (req, res, next) => {
   try {
     const bookmarks = await Bookmark.find({ userId: req.user._id });
     success(res, bookmarks, 200);
+  } catch (error) {
+    next(error);
+  }
+};
+
+export const getBookmarkById = async (req, res, next) => {
+  try {
+    const bookmark = await Bookmark.findById({ _id: req.params.id });
+
+    if (!bookmark) {
+      const message = "Bookmark not found";
+      return fail(res, message, 404);
+    }
+    success(res, bookmark, 200);
   } catch (error) {
     next(error);
   }
