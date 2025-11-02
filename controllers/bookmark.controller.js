@@ -16,8 +16,42 @@ export const createBookmark = async (req, res, next) => {
 
 export const getAllBookmarks = async (req, res, next) => {
   try {
-    const bookmarks = await Bookmark.find({ userId: req.user._id });
-    success(res, bookmarks, 200);
+    const {
+      search,
+      isArchived = "false",
+      sortBy = "-createdAt",
+      tags,
+    } = req.query;
+
+    let query = {};
+
+    if (search) {
+      query.title = { $regex: new RegExp(search, "i") };
+    }
+
+    if (isArchived) {
+      query.isArchived = isArchived === "true";
+    }
+
+    let sortOption = {};
+    if (sortBy) {
+      const sortField = sortBy.startsWith("-") ? sortBy.substring(1) : sortBy;
+      const sortOrder = sortBy.startsWith("-") ? -1 : 1;
+      sortOption[sortField] = sortOrder;
+    }
+
+    if (tags) {
+      query.tags = { $in: tags.split(",") };
+    }
+
+    const bookmarks = await Bookmark.find({
+      userId: req.user._id,
+      ...query,
+    }).sort(sortOption);
+
+    const totalCount = await Bookmark.countDocuments();
+
+    success(res, bookmarks, 200, totalCount);
   } catch (error) {
     next(error);
   }
@@ -27,12 +61,13 @@ export const getBookmarkById = async (req, res, next) => {
   try {
     // const bookmark = await Bookmark.findById({ _id: req.params.id });
     const bookmark = await Bookmark.findOne({ _id: req.params.id });
+    const totalCount = await Bookmark.countDocuments();
 
     if (!bookmark) {
       const message = "Bookmark not found";
       return fail(res, message, 404);
     }
-    success(res, bookmark, 200);
+    success(res, bookmark, 200, totalCount);
   } catch (error) {
     next(error);
   }

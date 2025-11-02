@@ -1,7 +1,7 @@
-export const success = (res, data, code = 200) => {
+export const success = (res, data, code = 200, totalCount) => {
   return res.status(code).json({
     success: true,
-
+    totalCount,
     data,
   });
 };
