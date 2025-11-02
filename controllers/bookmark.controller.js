@@ -3,6 +3,14 @@ import { fail, success } from "../services/response.js";
 
 export const createBookmark = async (req, res, next) => {
   try {
+    const { url } = req.body;
+    const existing = await Bookmark.findOne({ url });
+    if (existing) {
+      const error = {};
+      error.message = "Url already exist in bookmark list";
+      error.statusCode = 400;
+      throw error;
+    }
     const bookmark = await Bookmark.create({
       ...req.body,
       userId: req.user._id,

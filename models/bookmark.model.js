@@ -21,6 +21,7 @@ const bookmarkSchema = new mongoose.Schema(
       match: /^https?:\/\/.+/,
       trim: true,
       index: true,
+      unique: true,
     },
 
     favicon: {
