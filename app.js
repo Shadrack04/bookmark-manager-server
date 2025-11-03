@@ -23,7 +23,7 @@ app.use("/api/v1/bookmark", authMiddleware, bookmarkRouter);
 app.use(errorMiddleware);
 
 app.listen(PORT, async () => {
-  console.log(`server run on port https://localhost:${PORT}`);
+  console.log(`server run on port ${PORT}`);
 
   await connectToDatabase();
 });
