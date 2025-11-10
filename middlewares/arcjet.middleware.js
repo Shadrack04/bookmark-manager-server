@@ -2,7 +2,7 @@ import aj from "../config/arcjet.js";
 
 export const arcjectMiddleware = async (req, res, next) => {
   try {
-    const decision = await aj.protect(req, { requested: 5 });
+    const decision = await aj.protect(req, { requested: 1 });
     if (decision.isDenied()) {
       if (decision.reason.isRateLimit()) {
         return res.status(429).json({ error: "Too many request" });
