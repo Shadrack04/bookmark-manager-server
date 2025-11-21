@@ -101,6 +101,7 @@ export const updateVisitCount = async (req, res, next) => {
     console.log(id);
     const bookmark = await Bookmark.findById(id);
     bookmark.visitCount = bookmark.visitCount + 1;
+    bookmark.lastVisited = Date.now();
     await bookmark.save();
 
     success(res, bookmark, 200);
