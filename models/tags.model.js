@@ -8,6 +8,12 @@ const tagsSchema = mongoose.Schema({
     index: true,
     unique: true,
   },
+  userId: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "User",
+    index: true,
+    required: [true, "UserId is required"],
+  },
 });
 
 export const Tag = mongoose.model("Tag", tagsSchema);

@@ -9,6 +9,7 @@ import bookmarkRouter from "./routes/bookmark.route.js";
 import authMiddleware from "./middlewares/auth.middleware.js";
 import { arcjectMiddleware } from "./middlewares/arcjet.middleware.js";
 import cors from "cors";
+import tagRouter from "./routes/tags.route.js";
 
 const app = express();
 
@@ -21,6 +22,7 @@ app.use(cors());
 
 app.use("/api/v1/auth", authRouter);
 app.use("/api/v1/bookmark", authMiddleware, bookmarkRouter);
+app.use("/api/v1/tags", authMiddleware, tagRouter);
 
 app.use(errorMiddleware);
 

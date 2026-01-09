@@ -21,7 +21,7 @@ export const createBookmark = async (req, res, next) => {
       for (const name of tags) {
         const existingTag = await Tag.findOne({ tagName: name });
         if (!existingTag) {
-          await Tag.create({ tagName: name });
+          await Tag.create({ tagName: name, userId: req.user._id });
         }
       }
     }
