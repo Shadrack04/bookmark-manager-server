@@ -1,10 +1,12 @@
 import { Bookmark } from "../models/bookmark.model.js";
+import { Tag } from "../models/tags.model.js";
 import { fail, success } from "../services/response.js";
 
 export const createBookmark = async (req, res, next) => {
   try {
-    const { url } = req.body;
-    const existing = await Bookmark.findOne({ url });
+    console.log(req.body);
+    const { url, tags } = req.body;
+    const existing = await Bookmark.findOne({ url, userId: req.user._id });
     if (existing) {
       const error = {};
       error.message = "Url already exist in bookmark list";
@@ -15,6 +17,14 @@ export const createBookmark = async (req, res, next) => {
       ...req.body,
       userId: req.user._id,
     });
+    if (tags.length >= 1) {
+      for (const name of tags) {
+        const existingTag = await Tag.findOne({ tagName: name });
+        if (!existingTag) {
+          await Tag.create({ tagName: name });
+        }
+      }
+    }
 
     success(res, bookmark, 201);
   } catch (error) {
