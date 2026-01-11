@@ -59,7 +59,9 @@ export const getAllBookmarks = async (req, res, next) => {
     }
 
     if (tags) {
-      query.tags = { $in: tags.split(",") };
+      query.tags = {
+        $in: Array.isArray(tags) ? tags : [tags],
+      };
     }
 
     const bookmarks = await Bookmark.find({
